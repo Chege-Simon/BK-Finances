@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header row">
-            <h3 class="card-title col-md-10">All Registered Users</h3>
+            <h3 class="card-title col-md-10">All Registered Organisations</h3>
             <input wire:model="searchTerm" type="text" class="form-control rounded col-md-2" placeholder="Search...">
 
         </div>
@@ -19,26 +19,26 @@
                 @endforeach
                 </thead>
                 <tbody>
-                    @if(count($data))
-                        @foreach($data as $item)
-                            <tr>
-                                @foreach($headers as $key => $value)
-                                    <td>
-                                        {{ $item->$key }}
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    @else
+                @if(count($organisations))
+                    @foreach($organisations as $organisation)
                         <tr>
-                            <td colspan="{{ count($headers) }}"><h2>No Results found!</h2></td>
+                            @foreach($headers as $key => $value)
+                                <td>
+                                    {{ $organisation->$key }}
+                                </td>
+                            @endforeach
                         </tr>
-                    @endif
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="{{ count($headers) }}"><h2>No Results found!</h2></td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
             <div class="row">
                 <div class="col-sm-6" style="">
-                    {{ $data->links('pagination::bootstrap-4') }}
+                    {{ $organisations->links('pagination::bootstrap-4') }}
                 </div>
                 <div class="clo-sm-6">  </div>
             </div >

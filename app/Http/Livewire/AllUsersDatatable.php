@@ -12,6 +12,7 @@ class AllUsersDatatable extends Component
     public $headers;
     public $sortColumn = 'created_at';
     public $sortDirection = 'asc';
+    public $searchTerm = '';
 
     private function headerConfig(){
         return [
@@ -35,7 +36,19 @@ class AllUsersDatatable extends Component
     }
 
     private function resultData(){
-        return User::where('first_name', '!=', '' )->orderBy($this->sortColumn, $this->sortDirection)->paginate(2);
+        return User::where(function ($query){
+            $query->where('phone_number','like','+254'.'%');
+            if($this->searchTerm != ""){
+                $query->where('first_name','like','%'.$this->searchTerm.'%');
+                $query->orWhere('middle_name','like','%'.$this->searchTerm.'%');
+                $query->orWhere('last_name','like','%'.$this->searchTerm.'%');
+                $query->orWhere('email','like','%'.$this->searchTerm.'%');
+                $query->orWhere('phone_number','like','%'.$this->searchTerm.'%');
+                $query->orWhere('role','like','%'.$this->searchTerm.'%');
+            }
+        })
+            ->orderBy($this->sortColumn, $this->sortDirection)
+            ->paginate(10);
     }
 
     public function render()

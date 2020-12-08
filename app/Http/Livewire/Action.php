@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use App\Models\Account;
+use App\Models\Organisation;
 
 class Action extends Component
 {
@@ -17,17 +20,24 @@ class Action extends Component
     public $organisation;
     public $validated_data;
     public $isOpen = false;
+    public $organisations;
+    public $greet;
+
 
     protected $rules = [
-        'account_number' => 'required|string|min:5',
-        'organisation' => 'required|int'
+        'account_number' => 'required|min:5',
+        'organisation' => 'required',
     ];
+
+    public function fetchOrganisations(){
+        $this->organisations = Organisation::all();
+    }
 
     public function openModal(){
         $this->isOpen = true;
     }
 
-    public function closeModel(){
+    public function closeModal(){
         $this->isOpen = false;
     }
 
@@ -45,13 +55,20 @@ class Action extends Component
 
     }
     public function addAccount(){
-        if($this->validate()){
-            $this->closeModel();
-        }
+
+        $this->validate();
+
+        Account::create([
+            'user_account_number' => $this->account_number,
+            'organisation_id' => $this->organisation,
+            'user_id' => auth()->user()->id,
+        ]);
+        $this->closeModal();
     }
 
     public function render()
     {
+        $this->fetchOrganisations();
         return view('livewire.action');
     }
 }

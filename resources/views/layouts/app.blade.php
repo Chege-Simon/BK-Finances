@@ -157,6 +157,24 @@
                                     </a>
                             </li>
 
+                            <!-- My Accounts -->
+                            <li class="btn btn-dark m-2 text-left">
+                                <a href="{{url('my_accounts/'.Auth::User()->id)}}" class="text-dark">
+                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-card-list text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
+                                    </svg>
+
+                                    {{--                                    <i class="nav-icon fas fa-list-alt text-primary fa-2x"></i>--}}
+                                    <span class="pl-4 text text-light">
+                                    {{__('My Accounts')}}
+                                    </span>
+                                </a>
+                            </li>
+
                             <!-- My Transaction -->
                             <li class="btn btn-dark m-2 text-left">
                                 <a href="{{url('my_transactions/'.Auth::User()->id)}}" class="text-dark">
@@ -193,19 +211,19 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="/admin/all_accounts" class="nav-link">
                                             <i class="fa fa-list nav-icon"></i>
                                             <p>All Accounts</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="/admin/all_transactions" class="nav-link">
                                             <i class="fa fa-list-alt nav-icon"></i>
                                             <p>All Transactions</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="/admin/all_organisations" class="nav-link">
                                             <i class="fa fa-sitemap nav-icon"></i>
                                             <p>All Organisations</p>
                                         </a>
@@ -281,19 +299,7 @@
 
         <script src="{{ mix('js/app.js') }}"></script>
         <script src="{{ mix('js/admin-lte.js') }}"></script>
-        <!-- DataTables  & Plugins -->
-        <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-        <script src="../../plugins/jszip/jszip.min.js"></script>
-        <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
-        <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
         @livewireScripts
         @stack('scripts')
     </body>

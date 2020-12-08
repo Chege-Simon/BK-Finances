@@ -41,7 +41,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2"></div>
+            <div class="col-lg-2">
+            </div>
             <div class="col-lg-4 col-sm-12 col-md-4">
                 <div class="card" style="width: 18rem;">
                     <img src="/withdraw.png" style="height: 200px" class="card-img-top p-5" alt="withdraw">
@@ -133,20 +134,25 @@
                 </div>
                 <div class="modal-body">
                     <p>Register your account here:</p>
-                    <form >
+                    <form  wire:submit.prevent="addAccount">
                         <div class="form-group">
-                            <label for="organisation">Organisation</label>
-                            <input type="number" class="form-control" class="@error('organisation') is-invalid @enderror" wire:model.defer="organisation" id="organisation" required>
+                            <label for="organisation">Broker</label>
+                            <select class="custom-select" class="@error('organisation') is-invalid @enderror" wire:model="organisation" id="organisation" required>
+                                <option selected>Select Broker:</option>
+                                @foreach($organisations as $organisation)
+                                    <option value="{{ $organisation->id }}">{{ $organisation->organisation_name }}</option>
+                                @endforeach
+                            </select>
                             @error('organisation') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="account_number">Account Number</label>
-                            <input type="text" class="form-control" class="@error('account_number') is-invalid @enderror" wire:model.defer="account_number" id="account_number" required>
+                            <input type="text" class="form-control" class="@error('account_number') is-invalid @enderror" wire:model="account_number" id="account_number" required>
                             @error('account_number') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="modal-footer">
-                            <button wire:click="addAccount" type="submit" class="btn btn-primary">Add Account</button>
+                            <button type="submit" class="btn btn-primary">Add Account</button>
                         </div>
                     </form>
                 </div>

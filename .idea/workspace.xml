@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12820e82-b9ca-4188-ac57-fa252c2c4eb4" name="Default Changelist" comment="" />
+    <list default="true" id="12820e82-b9ca-4188-ac57-fa252c2c4eb4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Action.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Action.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/AllUsersDatatable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/AllUsersDatatable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/action.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/action.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/all-users-datatable.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/all-users-datatable.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +22,9 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -140,6 +152,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1lAsdGDalYu5F1N5rBvYkQlAzVs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -179,6 +192,7 @@
       <workItem from="1607051336018" duration="463000" />
       <workItem from="1607066166381" duration="40933000" />
       <workItem from="1607324971201" duration="33597000" />
+      <workItem from="1607410044769" duration="38534000" />
     </task>
     <servers />
   </component>
@@ -190,6 +204,10 @@
       <screen x="48" y="27" width="1552" height="873" />
     </state>
     <state x="407" y="121" width="824" height="685" key="#Test_Frameworks/48.27.1552.873@48.27.1552.873" timestamp="1607168359357" />
+    <state x="557" y="221" width="524" height="485" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607446789356">
+      <screen x="48" y="27" width="1552" height="873" />
+    </state>
+    <state x="557" y="221" width="524" height="485" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/48.27.1552.873@48.27.1552.873" timestamp="1607446789356" />
     <state x="602" y="207" width="424" height="515" key="FileChooserDialogImpl" timestamp="1607333256421">
       <screen x="48" y="27" width="1552" height="873" />
     </state>
@@ -198,10 +216,10 @@
       <screen x="48" y="27" width="1552" height="873" />
     </state>
     <state x="617" y="388" width="404" height="152" key="NewPhpFileDialog/48.27.1552.873@48.27.1552.873" timestamp="1607338880121" />
-    <state x="487" y="214" width="672" height="678" key="search.everywhere.popup" timestamp="1607361990772">
+    <state x="487" y="214" width="672" height="678" key="search.everywhere.popup" timestamp="1607433989859">
       <screen x="48" y="27" width="1552" height="873" />
     </state>
     <state x="485" y="214" width="672" height="678" key="search.everywhere.popup/45.27.1555.873@45.27.1555.873" timestamp="1607079350085" />
-    <state x="487" y="214" width="672" height="678" key="search.everywhere.popup/48.27.1552.873@48.27.1552.873" timestamp="1607361990772" />
+    <state x="487" y="214" width="672" height="678" key="search.everywhere.popup/48.27.1552.873@48.27.1552.873" timestamp="1607433989859" />
   </component>
 </project>
