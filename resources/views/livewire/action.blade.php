@@ -1,6 +1,24 @@
 <div x-data="{ open: false }">
     <div class="container jumbotron pt-3">
         <div class="row">
+            <div class="col-6 ml-auto">
+                @if (session()->has('error_message'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ session('error_message') }}.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (session()->has('success_message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('error_message') }}.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+            </div>
             <p class="col-12">Add account to deposit to or withdraw from</p>
             <div class="col-3">
                 <button class="btn btn-success" wire:click="openModal" data-toggle="modal" data-target="#addAccountModel">Add Account</button>
@@ -30,10 +48,10 @@
                         <div>
                             @if($expected_deposit_amount > 0)
                                 <p>You account will be funded with</p>
-                                <p>USD {{ $expected_deposit_amount }}</p>
+                                <p>USD {{ number_format($expected_deposit_amount,2) }}</p>
                                 <hr>
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary m-1 mt-3" data-toggle="modal" data-target="#depositModel">
+                                <button type="button" class="btn btn-primary m-1 mt-3" data-toggle="modal" data-target="#depositModel" data-backdrop="false">
                                     Deposit Now
                                 </button>
                             @endif
@@ -42,6 +60,7 @@
                 </div>
             </div>
             <div class="col-lg-2">
+                {{ $results }}
             </div>
             <div class="col-lg-4 col-sm-12 col-md-4">
                 <div class="card" style="width: 18rem;">
@@ -57,7 +76,7 @@
                         <div>
                             @if($expected_withdraw_amount > 0)
                             <p>You will receive</p>
-                            <p>Ksh {{ $expected_withdraw_amount }}</p>
+                            <p>Ksh {{ number_format($expected_withdraw_amount,2) }}</p>
                             <hr>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-success m-1 mt-3" data-toggle="modal" data-target="#withdrawModel">
@@ -81,16 +100,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <select class="custom-select">
-                        <option selected>Select account to deposit to:</option>
-                        <option value="1">Binary CRT2310498234</option>
-                        <option value="2">TemplerFx 982237</option>
-                        <option value="3">Exness 32DSJA421</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary"  data-dismiss="modal">Deposit</button>
+                    <form wire:submit.prevent="confirmDeposit">
+                        <div class="form-group">
+                            <label for="organisation">Account to deposit</label>
+                            <select class="custom-select" class="@error('account_id') is-invalid @enderror" wire:model.defer="account_id" id="account_id" required>
+                                <option selected value="0">Select Account:</option>
+                                @foreach($accounts as $account)
+                                    <option value="{{ $account->id }}">{{ $account->organisation->organisation_name }} - {{ $account->user_account_number }}</option>
+                                @endforeach
+                            </select>
+                            @error('account_id') <span class="error text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Deposit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -160,4 +185,47 @@
         </div>
     </div>
     @endif
+<!-- Confirm Modal -->
+    @if($open_confirm)
+        <div class="modal d-block" id="addAccountModel" tabindex="-1" role="dialog" aria-labelledby="addAccountModelLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addAccountModelLabel">Confirm Deposit Details</h5>
+                        <button type="button" wire:click="closeConfirm" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please confirm the details:</p>
+                        <p>Account: <span class="font-weight-bolder"><?php if($the_account):?>{{ $the_account->user_account_number }}<?php endif?></span></p>
+                        <p>Organisation: <span class="font-weight-bolder"><?php if($the_account):?>{{ $the_account->organisation->organisation_name }}<?php endif?></span></p>
+                        <p>Amount: <span class="font-weight-bolder">Ksh {{ number_format($deposit_amount, 2) }}</span></p>
+                        <hr>
+                        <hr>
+                        <form wire:submit.prevent="deposit">
+                            <div class="form-group">
+                                <label for="confirm" class="form-check-label">I confirm the Details are correct!</label>
+                                <input type="checkbox" value="true" wire:model="confirmed" class="form-check-input mx-3" id="confirm" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" type="button" wire:click="closeConfirm" data-dismiss="modal" >Cancel</button>
+                                <button class="btn btn-primary" type="submit">Deposit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif>
+    <script>
+        window.addEventListener('alert', event => {
+            toastr[event.detail.type](event.detail.message,
+                event.detail.title ?? '')
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+            }
+        })
+    </script>
 </div>

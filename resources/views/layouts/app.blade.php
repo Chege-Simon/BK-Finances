@@ -13,7 +13,8 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/admin-lte.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-
+        <!-- Sweet ALert -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css" />
         @livewireStyles
 
         <!-- Scripts -->
@@ -127,8 +128,8 @@
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Dashboard -->
-                            <li class="btn btn-dark m-2 text-left">
-                                <a href="{{ route('dashboard') }}" class="text-dark">
+                            <li class="m-2 text-left">
+                                <a href="{{ route('dashboard') }}" class="btn btn-dark text-dark text-left" style="width: 100%;">
                                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-border-style text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm8 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm8 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-4-4a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-1z"/>
                                     </svg>
@@ -141,8 +142,8 @@
                             </li>
 
                             <!-- Sidebar user  -->
-                            <li class="btn btn-dark m-2 text-left">
-                                    <a href="{{ route('profile.show') }}" class="d-block text-info" style="text-transform: capitalize">
+                            <li class="m-2 text-left">
+                                    <a href="{{ route('profile.show') }}" class="text-info btn btn-dark text-left" style="text-transform: capitalize; width: 100%">
                                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
                                             <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -158,8 +159,8 @@
                             </li>
 
                             <!-- My Accounts -->
-                            <li class="btn btn-dark m-2 text-left">
-                                <a href="{{url('my_accounts/'.Auth::User()->id)}}" class="text-dark">
+                            <li class="m-2 text-left">
+                                <a href="{{url('my_accounts/'.Auth::User()->id)}}" class="btn btn-dark text-dark text-left" style="width: 100%">
                                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-card-list text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                                         <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
@@ -176,8 +177,8 @@
                             </li>
 
                             <!-- My Transaction -->
-                            <li class="btn btn-dark m-2 text-left">
-                                <a href="{{url('my_transactions/'.Auth::User()->id)}}" class="text-dark">
+                            <li class=" m-2 text-left">
+                                <a href="{{url('my_transactions/'.Auth::User()->id)}}" class="btn btn-dark text-dark pr-5">
                                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-card-checklist text-warning" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                                         <path fill-rule="evenodd" d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
@@ -249,7 +250,7 @@
 
                         </li>
                     </nav>
-                    <!-- /.sidebar-menu -->
+                    <!-- /.sidebar-menu -->>
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -299,7 +300,69 @@
 
         <script src="{{ mix('js/app.js') }}"></script>
         <script src="{{ mix('js/admin-lte.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script>
+            const SwalModal = (icon, title, html) => {
+                Swal.fire({
+                    icon,
+                    title,
+                    html
+                })
+            }
 
+            const SwalConfirm = (icon, title, html, confirmButtonText, method, params, callback) => {
+                Swal.fire({
+                    icon,
+                    title,
+                    html,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText,
+                    reverseButtons: true,
+                }).then(result => {
+                    if (result.value) {
+                        return livewire.emit(method, params)
+                    }
+
+                    if (callback) {
+                        return livewire.emit(callback)
+                    }
+                })
+            }
+
+            const SwalAlert = (icon, title, timeout = 7000) => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: timeout,
+                    onOpen: toast => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon,
+                    title
+                })
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                this.livewire.on('swal:modal', data => {
+                    SwalModal(data.icon, data.title, data.text)
+                })
+
+                this.livewire.on('swal:confirm', data => {
+                    SwalConfirm(data.icon, data.title, data.text, data.confirmText, data.method, data.params, data.callback)
+                })
+
+                this.livewire.on('swal:alert', data => {
+                    SwalAlert(data.type, data.title, data.timeout)
+                })
+            })
+        </script>
         @livewireScripts
         @stack('scripts')
     </body>

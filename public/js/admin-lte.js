@@ -11470,7 +11470,7 @@ __webpack_require__(/*! admin-lte/dist/js/demo */ "./node_modules/admin-lte/dist
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/dev_kim/Desktop/Ben-kim-finances-app/resources/js/admin-lte.js */"./resources/js/admin-lte.js");
+module.exports = __webpack_require__(/*! /home/dev_kim/Desktop/BK-Finances/resources/js/admin-lte.js */"./resources/js/admin-lte.js");
 
 
 /***/ })
