@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Organisation;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +21,7 @@ class Account extends Model
         'user_id',
     ];
     public function user(){
-        return $this->belongsTo('app\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function organisation(){
@@ -28,6 +29,6 @@ class Account extends Model
     }
 
     public function transactions(){
-        return $this->hasMany('app\Models\Transaction');
+        return $this->hasMany('App\Models\Transaction');
     }
 }

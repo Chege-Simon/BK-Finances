@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use App\Models\Account;
 use App\Models\Organisation;
+use App\Models\Transaction;
 
 class Action extends Component
 {
@@ -28,7 +29,7 @@ class Action extends Component
     private $results;
     public $processingMsg;
     public $STKPushRequestStatus;
-    public $help;
+    public $code;
     public $CheckoutID;
 
 
@@ -37,7 +38,7 @@ class Action extends Component
         'organisation' => 'required',
     ];
 
-    protected $listeners = ['deposit'];
+    protected $listeners = ['deposit','canceledTransaction'];
 
     public function confirmDeposit(){
         if($this->account_id > 0){
@@ -45,11 +46,11 @@ class Action extends Component
             $this->emit("swal:confirm", [
                 'type'        => 'primary',
                 'title'       => 'Confirm Details',
-                'text'        => "Account: ".$this->the_account->user_account_number."\nOrganisation: ".$this->the_account->organisation->organisation_name."\n Amount: ".$this->deposit_amount,
+                'text'        => "Account: <b>".$this->the_account->user_account_number."</b><br>Organisation: <b>".$this->the_account->organisation->organisation_name."</b><br>Amount: <b>".$this->deposit_amount."</b><br><hr><br><b>Enter Mpesa pin on your phone</b>",
                 'confirmText' => 'Yes, Deposit!',
                 'method'      => 'deposit',
                 'params'      => [], // optional, send params to success confirmation
-                'callback'    => '', // optional, fire event if no confirmed
+                'callback'    => 'canceledTransaction', // optional, fire event if no confirmed
             ]);
         }else{
             $this->emit('swal:alert', [
@@ -60,18 +61,68 @@ class Action extends Component
         }
     }
 
-    public function deposit(){
-        $mpesa= new \Safaricom\Mpesa\Mpesa();
+    public function canceledTransaction()
+    {
         $this->emit('swal:alert', [
-            'type'    => 'success',
-            'title'   => 'Please enter mpesa pin in your phone to proceed',
+            'type'    => 'warning',
+            'title'   => 'Transaction cancelled by User',
             'timeout' => 10000
         ]);
-        $this->CheckoutID = $this->requestSTK();
-        
-        // $this->checkSTKStatus($this->CheckoutID);
     }
 
+    public function recordTransaction(){
+        Transaction::create([
+            'account_id' => $this->the_account->id,
+            'amount' => $this->deposit_amount,
+            'status' => "Deposit: In transaction",
+        ]);
+    }
+
+    public function deposit(){
+
+        $mpesa= new \Safaricom\Mpesa\Mpesa();
+
+        $this->CheckoutID = $this->requestSTK();
+
+        $this->checkSTKStatus($this->CheckoutID);
+        $timer = 45;
+        sleep($timer);
+
+        $this->checkSTKStatus($this->CheckoutID);
+
+        $this->emit('swal:alert', [
+            'type'    => 'success',
+            'title'   => $this->processingMsg,
+            'timeout' => 10000
+        ]);
+        $this->emit('swal:alert', [
+            'type'    => 'success',
+            'title'   => "Recording transaction",
+            'timeout' => 10000
+        ]);
+    }
+
+    public function checkSTKStatus($CheckoutRequestID){
+        $mpesa= new \Safaricom\Mpesa\Mpesa();
+        $BusinessShortCode = "174379";
+        $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
+        $timestamp='20'.date("ymdhis");
+        $password=base64_encode($BusinessShortCode.$LipaNaMpesaPasskey.$timestamp);
+
+        $STKPushRequestStatus=$mpesa->STKPushQuery($CheckoutRequestID,$BusinessShortCode,$password,$timestamp);
+
+        $json = json_decode($STKPushRequestStatus);
+        if(isset($json->ResultDesc)){
+            $this->processingMsg = $json->ResultDesc;
+            $this->code = $json->ResultCode;
+            $this->recordTransaction();
+        }elseif($json == ''){
+            $this->processingMsg = 'Connection error';
+        }else{
+            $this->processingMsg = 'Connection error';
+        }
+        $this->results = $STKPushRequestStatus;
+    }
 
     public function requestSTK (){
         $mpesa= new \Safaricom\Mpesa\Mpesa();
@@ -150,6 +201,7 @@ class Action extends Component
         ]);
         $this->closeModal();
     }
+
 
     public function render()
     {

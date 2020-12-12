@@ -351,7 +351,7 @@
 
             document.addEventListener('DOMContentLoaded', () => {
                 this.livewire.on('swal:modal', data => {
-                    SwalModal(data.icon, data.title, data.text)
+                    SwalModal(data.type, data.title, data.text)
                 })
 
                 this.livewire.on('swal:confirm', data => {

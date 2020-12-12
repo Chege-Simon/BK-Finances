@@ -14,11 +14,11 @@ class Organisation extends Model
      * @var array
      */
     protected $fillable = [
-        'account_number',
+        'organisation_account_number',
         'organisation_name',
     ];
 
     public function accounts(){
-        return $this->hasMany('app\Models\Account');
+        return $this->hasMany('App\Models\Account');
     }
 }

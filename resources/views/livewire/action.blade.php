@@ -60,7 +60,6 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                {{ $results }}
             </div>
             <div class="col-lg-4 col-sm-12 col-md-4">
                 <div class="card" style="width: 18rem;">
@@ -138,7 +137,7 @@
                     <p>Enter amount in USD</p>
                     <hr>
                     <p>Funds will be sent to</p>
-                    <p>MPESA Number: 0712345678</p>
+                    <p>MPESA Number: {{ Auth::User()->phone_number }}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal">Okay, Done</button>

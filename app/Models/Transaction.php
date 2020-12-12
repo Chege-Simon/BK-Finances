@@ -20,6 +20,6 @@ class Transaction extends Model
     ];
 
     public function account(){
-        return $this->belongsTo('app\Models\Account');
+        return $this->belongsTo('App\Models\Account');
     }
 }

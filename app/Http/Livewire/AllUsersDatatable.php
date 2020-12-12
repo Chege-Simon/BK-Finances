@@ -13,6 +13,63 @@ class AllUsersDatatable extends Component
     public $sortColumn = 'created_at';
     public $sortDirection = 'asc';
     public $searchTerm = '';
+    public $isOpen;
+    public $the_user;
+    public $role;
+
+    protected $rules = [
+        'role' => 'required'
+    ];
+
+    protected $listeners = ['deleteUser'];
+
+    public function openModal($id){
+        $this->the_user = User::find($id);
+        $this->role = $this->the_user->role;
+        $this->isOpen = true;
+    }
+
+    public function closeModal(){
+        $this->isOpen = false;
+    }
+
+    public function editUserRole(){
+        $this->validate();
+
+        $this->the_user->role =  $this->role;
+
+        $this->the_user->save();
+        
+        $this->closeModal();
+        $this->emit('swal:alert', [
+            'type'    => 'success',
+            'title'   => 'User Role Edited Successfully',
+            'timeout' => 10000
+        ]);
+    }
+
+    public function confirmDelete($id){
+        $this->the_user = User::find($id);
+        $this->emit("swal:confirm", [
+            'type'        => 'danger',
+            'title'       => 'Confirm Deletion of User',
+            'text'        => "Full Name: <b>".$this->the_user->first_name." ".$this->the_user->middle_name." ".$this->the_user->last_name."</b><br>Phone Number: <b>".$this->the_user->phone_number."</b><br>Email: <b>".$this->the_user->email."</b></b><br><hr><br><b>Are you sure you want to delete this user?</b><br><h5><b>Caution! This action is unreversable</b></h5>",
+            'confirmText' => 'Yes, Delete!',
+            'method'      => 'deleteUser',
+            'params'      => [], // optional, send params to success confirmation
+            'callback'    => '', // optional, fire event if no confirmed
+        ]);
+    }
+
+
+    public function deleteUser(){
+        $this->the_user->delete();
+        $this->emit('swal:alert', [
+            'type'    => 'success',
+            'title'   => 'User Deleted Successfully',
+            'timeout' => 10000
+        ]);
+    }
 
     private function headerConfig(){
         return [
@@ -54,7 +111,7 @@ class AllUsersDatatable extends Component
     public function render()
     {
         return view('livewire.all-users-datatable',[
-            'data'=> $this->resultData()
+            'users'=> $this->resultData()
         ]);
     }
 }

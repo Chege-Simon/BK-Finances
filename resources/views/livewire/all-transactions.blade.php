@@ -2,7 +2,7 @@
 <div>
     <div class="card">
         <div class="card-header row">
-            <h3 class="card-title col-md-8">All Your Transactions</h3>
+            <h3 class="card-title col-md-8">All Recorded Transactions</h3>
             <input wire:model="searchTerm" type="text" class="form-control rounded col-md-4" placeholder="Search Account Number...">
 
         </div>
@@ -20,17 +20,15 @@
                 @endforeach
                 </thead>
                 <tbody>
-                @if(count($accounts))
-                    @foreach($accounts as $account)
-                        @foreach($account->transactions as $transaction)
-                            <tr wire:key="{{ $account->id }}">
-                                @foreach($headers as $key => $value)
-                                    <td wire:key="{{ $key }}">
-                                        {!! is_array($value) ? $value['func']($account->$key) :$transaction->$key!!}
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
+                @if(count($transactions))
+                    @foreach($transactions as $transaction)
+                        <tr wire:key="{{ $transaction->id }}">
+                            @foreach($headers as $key => $value)
+                                <td wire:key="{{ $key }}">
+                                    {!! is_array($value) ? $value['func']($transaction->account->$key) :$transaction->$key!!}
+                                </td>
+                            @endforeach
+                        </tr>
                     @endforeach
                 @else
                     <tr>
@@ -41,7 +39,7 @@
             </table>
             <div class="row">
                 <div class="col-sm-6" style="">
-                    {{ $accounts->links('pagination::bootstrap-4') }}
+                    {{ $transactions->links('pagination::bootstrap-4') }}
                 </div>
                 <div class="clo-sm-6">  </div>
             </div >

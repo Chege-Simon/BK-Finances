@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire;
 
+
 use App\Models\Account;
 use App\Models\Organisation;
 use App\Models\User;
+use App\Models\Transaction;
 use Livewire\Component;
 use Livewire\WithPagination;
-;
 
-class MyTransactions extends Component
+class AllTransactions extends Component
 {
     use withPagination;
 
@@ -17,7 +18,6 @@ class MyTransactions extends Component
     public $sortColumn = 'created_at';
     public $sortDirection = 'asc';
     public $searchTerm = '';
-    private $user_id;
 
     private function headerConfig()
     {
@@ -40,18 +40,22 @@ class MyTransactions extends Component
         ];
     }
 
-    public function mount($id)
+    public function mount()
     {
         $this->headers = $this->headerConfig();
-        $this->user_id = $id;
     }
     public function hydrate(){
         $this->headers = $this->headerConfig();
     }
 
     public function sort($column)
-    {
-        $this->sortColumn = 'created_at';
+    {   if($column == 'organisation'){
+        $this->sortColumn = 'account_id';
+        }elseif($column == 'user_account_number'){
+            $this->sortColumn = 'account_id';
+        }else{
+            $this->sortColumn = $column;
+        }
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
     }
 
@@ -66,29 +70,39 @@ class MyTransactions extends Component
         return $id;
     }
 
+    public function searchAccTerm(){
+        $acc =  Account::where('user_account_number', 'like', '%'.$this->searchTerm.'%')->first();
+        $id = '';
+        if($acc != null){
+            $id = $acc->id;
+        }else{
+            $id = " ";
+        }
+        return $id;
+    }
+
     private function resultData()
     {
-        return Account::where(function ($query) {
-            $query->where('user_id', '=', $this->user_id);
+        return Transaction::where(function ($query) {
+            $query->where('account_id', '!=', '');
             if ($this->searchTerm != "") {
-                $query->where('user_account_number', 'like', '%' . $this->searchTerm . '%');
-                $query->orWhere('organisation_id', 'like', '%' .$this->searchOrgTerm().'%');
+                $query->where('account_id', 'like', '%' . $this->searchAccTerm() . '%');
+                $query->orWhere('amount', 'like', '%' . $this->searchTerm . '%');
+                $query->orWhere('created_at', 'like', '%' . $this->searchTerm . '%');
+                $query->orWhere('status', 'like', '%' . $this->searchTerm . '%');
             }
         })
-            ->with('transactions')
+            ->with('account')
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->paginate(10);
     }
 
     public function render()
     {
-        return view('livewire.my-transactions',[
-            'accounts' => $this->resultData(),
-            'headers' => $this->headers
-        ])
-            ->layout('layouts.app',['header' => 'My Transactions']);
+        return view('livewire.all-transactions',[
+        'transactions' => $this->resultData(),
+        'headers' => $this->headers
+    ])
+        ->layout('layouts.app',['header' => 'All Transactions']);
     }
 }
-
-
-
